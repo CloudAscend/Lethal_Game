@@ -8,13 +8,50 @@ public class PlayerInteract : PlayerBase
 
     [SerializeField] private KeyCode grabKey;
     [SerializeField] private KeyCode dropKey;
+
+    [SerializeField] private Transform cam;
+
+    [SerializeField] private float detectDistance;
+    [SerializeField] private LayerMask whatIsItem;
     //[SerializeField] private 
+    RaycastHit hit;
+
     private void Update()
     {
-        /*
-        if (Input.GetKey(grabKey) && grabable)
-        */
+        DetectItem();
+        Drop();
+    }
 
-        //RaycastHit rayHit = Physics.Raycast(transform.position, transform.forward, out rayHit);
+    private void DetectItem()
+    {
+        Debug.DrawRay(cam.position, cam.forward, Color.red);
+        if (Physics.Raycast(cam.position, cam.forward, out hit, detectDistance, whatIsItem))
+        {
+            
+            UIManager.Instance.SetPickUpText(true);
+            if (GameManager.instance.HasHoldItem()) return;
+            Transform detectItem = hit.collider.transform;
+            PickUp(detectItem);
+        } else
+        {
+            UIManager.Instance.SetPickUpText(false);
+        }
+    }
+
+    private void PickUp(Transform item)
+    {
+       if(Input.GetKeyDown(grabKey))
+       {
+            GameManager.instance.GetItem(item);
+       }
+    }
+
+    private void Drop()
+    {
+        if(Input.GetKeyDown(dropKey))
+        {
+            if(GameManager.instance.HasHoldItem())
+                GameManager.instance.DropItem();
+        }
     }
 }
