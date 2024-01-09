@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public float stamina;
+    float maxStamina;
+    public Image staminaBar;
+    public float dValue; 
+
     private float moveSpeed; // 이동 속도
     public float walkSpeed;
     public float sprintSpeed;
@@ -43,6 +49,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        maxStamina = stamina;
+        staminaBar.fillAmount = maxStamina;
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -56,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+
+        staminaBar.fillAmount = stamina;
 
         if (grounded)
         {
@@ -105,10 +116,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        if (grounded && Input.GetKey(SprintKey))
+        if (grounded && Input.GetKey(SprintKey) && stamina > 0)
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+            DecreaseStamina();
         }
         else if(grounded)
         {
@@ -119,6 +131,19 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.air;
         }
+    }
+
+    private void DecreaseStamina()
+    {
+        if (stamina != 0)
+        {
+            stamina -= dValue * Time.deltaTime;
+        }
+    }
+
+    private void IncreaseStamina()
+    {
+        stamina += dValue * Time.deltaTime;
     }
 
     private void SpeedControl() // 속도 제한 주기
