@@ -45,6 +45,7 @@ public class Scan : MonoBehaviour
             foreach(var hit in hits)
             {
                 var item = hit.GetComponent<ItemBase>();
+                if (!item.Render.isVisible) continue;
                 if(!items.Contains(item))
                 {
                     items.Add(item);

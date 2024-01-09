@@ -24,7 +24,7 @@ public class ScanUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(GameManager.instance.cam.transform.position);
+        transform.rotation = GameManager.instance.cam.transform.rotation;
         transform.position = item.transform.position;
     }
 

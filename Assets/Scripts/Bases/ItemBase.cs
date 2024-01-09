@@ -33,6 +33,18 @@ public class ItemBase : MonoBehaviour
 
     private ScanUI ui;
 
+    private Renderer render;
+
+    public Renderer Render
+    {
+        get 
+        { 
+            if (render == null) 
+                render = GetComponent<Renderer>(); 
+            return render; 
+        }
+    }
+
     protected virtual void Start()
     {
         //EventManager.Instance.AddListener(Event_Type.EntityScan, this);
@@ -63,7 +75,7 @@ public class ItemBase : MonoBehaviour
     }
 
     protected virtual void Interact()
-    { 
+    {
 
     }
 
