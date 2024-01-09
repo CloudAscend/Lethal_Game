@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
 
     public readonly static int ScanDistance = 15;
 
+    private int curHand = 0;
+
     [Header("Objects")]
     public GameObject player;
-    public Transform rHand;
+    public Transform[] handPosArray;
     public Camera cam;
 
     [Header("Bases")]
@@ -24,17 +26,26 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    public void GetItem(Transform item)
+    public void GetItem(ItemBase item)
     {
-        item.parent = rHand;
+        if(item.grabType == ItemGrabType.Big)
+        {
+            item.transform.parent = handPosArray[1];
+            curHand = 1;
+        } else
+        {
+            item.transform.parent = handPosArray[0];
+            curHand = 0;
+        }
         item.GetComponent<Rigidbody>().useGravity = false;
         item.GetComponent<Rigidbody>().isKinematic = true;
-        item.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+        item.transform.localPosition = Vector3.zero;
     }
 
     public Transform DropItem()
     {
-        Transform dropItem = rHand.GetChild(0);
+        Transform dropItem = handPosArray[curHand].GetChild(0);
         dropItem.parent = null;
         dropItem.GetComponent<Rigidbody>().useGravity = true;
         dropItem.GetComponent<Rigidbody>().isKinematic = false;
@@ -43,6 +54,6 @@ public class GameManager : MonoBehaviour
 
     public bool HasHoldItem()
     {
-        return rHand.childCount > 0;
+        return handPosArray[curHand].childCount > 0;
     }
 }

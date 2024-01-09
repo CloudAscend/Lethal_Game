@@ -25,7 +25,7 @@ public class ScanUI : MonoBehaviour
     void Update()
     {
         transform.LookAt(GameManager.instance.cam.transform.position);
-        //transform.localRotation = Quaternion.Euler(new Vector3(-transform.rotation.x, -transform.rotation.y, -transform.rotation.z));
+        transform.position = item.transform.position;
     }
 
     public void Init(ItemBase item)

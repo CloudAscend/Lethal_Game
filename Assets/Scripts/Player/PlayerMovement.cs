@@ -177,4 +177,9 @@ public class PlayerMovement : MonoBehaviour
     {
         readyToJump = true;
     }
+
+    public void SpendStamina(float value)
+    {
+        stamina -= value;
+    }
 }

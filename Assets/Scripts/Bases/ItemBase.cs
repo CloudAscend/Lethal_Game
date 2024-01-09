@@ -8,10 +8,30 @@ public struct ScanInfo
     public Vector3 playerPos;
 }
 
+public enum ItemGrabType
+{
+    Small,
+    Big
+}
+
+public enum ItemType
+{
+    Normal,
+    Trap,
+    Weapon,
+    Useable
+}
+
+
 public class ItemBase : MonoBehaviour
 {
     public int price;
     public int weight;
+
+    public ItemType itemType = ItemType.Normal;
+    public ItemGrabType grabType = ItemGrabType.Small;
+
+    private ScanUI ui;
 
     protected virtual void Start()
     {
@@ -39,15 +59,12 @@ public class ItemBase : MonoBehaviour
     {
         ScanUI ui = UIManager.Instance.CreateScanUI(transform);
         ui.Init(this);
+        this.ui = ui;
     }
 
     protected virtual void Interact()
-    {
-        //GameManager.instance.itemShow.
-        this.GetComponent<Collider>().enabled = false;
-        transform.position = GameManager.instance.rHand.position;
-        transform.parent = GameManager.instance.rHand.transform;
-        //gameObject.SetActive(false);
+    { 
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,4 +72,6 @@ public class ItemBase : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
             Interact();
     }
+
+
 }
