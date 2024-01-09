@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public float stamina;
     float maxStamina;
     public Image staminaBar;
-    public float dValue; 
+    public float descountValue;
+    public float addValue;
 
     private float moveSpeed; // 이동 속도
     public float walkSpeed;
@@ -126,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+            IncreaseStamina();
         }
         else
         {
@@ -137,13 +139,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (stamina != 0)
         {
-            stamina -= dValue * Time.deltaTime;
+            stamina -= descountValue * Time.deltaTime;
         }
     }
 
     private void IncreaseStamina()
     {
-        stamina += dValue * Time.deltaTime;
+        if(stamina < 1)
+        {
+            stamina += addValue * Time.deltaTime;
+        }
+        else
+        {
+            return;
+        }
     }
 
     private void SpeedControl() // 속도 제한 주기

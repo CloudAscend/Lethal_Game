@@ -866,7 +866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stamina: 1
   staminaBar: {fileID: 889783531}
-  dValue: 0.3
+  descountValue: 0.3
+  addValue: 0.2
   walkSpeed: 3
   sprintSpeed: 7
   groundDrag: 5
