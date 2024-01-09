@@ -10,9 +10,11 @@ public class PlayerInteract : PlayerBase
     [SerializeField] private KeyCode dropKey;
 
     [SerializeField] private Transform cam;
+    [SerializeField] private Transform dropPos;
 
     [SerializeField] private float detectDistance;
     [SerializeField] private LayerMask whatIsItem;
+
     //[SerializeField] private 
     RaycastHit hit;
 
@@ -51,7 +53,10 @@ public class PlayerInteract : PlayerBase
         if(Input.GetKeyDown(dropKey))
         {
             if(GameManager.instance.HasHoldItem())
-                GameManager.instance.DropItem();
+            {
+                Transform dropItem = GameManager.instance.DropItem();
+                dropItem.position = dropPos.position;
+            }
         }
     }
 }

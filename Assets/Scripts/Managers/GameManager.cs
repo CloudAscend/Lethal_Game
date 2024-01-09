@@ -6,9 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public readonly static int ScanDistance = 15;
+
     [Header("Objects")]
     public GameObject player;
     public Transform rHand;
+    public Camera cam;
 
     [Header("Bases")]
     public ItemBase itemBase;
