@@ -10,7 +10,7 @@ public class PlayerInventory : PlayerBase
     public int weight;
 
     [SerializeField] private ItemBase[] inventory;
-    [SerializeField] private Transform inventoryTrans;
+    [SerializeField] private Image[] inventoryTrans;
     private int invenValue;
 
     //private void Start()
@@ -50,14 +50,14 @@ public class PlayerInventory : PlayerBase
 
         //if (invenValue)
         if (inventory[invenValue] == null)
-            inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = inventoryImage;
+            inventoryTrans[invenValue].sprite = inventoryImage;
         inventory[invenValue] = item;
     }
 
     public void RemoveInventory()
     {
         if (inventory[invenValue] != null)
-            inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = null;
+            inventoryTrans[invenValue].sprite = null;
         inventory[invenValue] = null;
     }
 }
