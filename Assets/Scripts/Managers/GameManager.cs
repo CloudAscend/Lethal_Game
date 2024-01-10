@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
 
     private int curHand = 0;
 
+    [Header("Systems")]
+    [SerializeField] Storage storage;
+
     [Header("Objects")]
     public GameObject player;
     public Transform[] handPosArray;
@@ -57,5 +60,10 @@ public class GameManager : MonoBehaviour
     public bool HasHoldItem()
     {
         return handPosArray[curHand].childCount > 0;
+    }
+
+    public void UpdateStorageItems()
+    {
+        storage.CheckItemsInStorageArea();
     }
 }
