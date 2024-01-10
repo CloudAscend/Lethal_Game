@@ -31,11 +31,29 @@ public class ItemBase : MonoBehaviour
     public ItemType itemType = ItemType.Normal;
     public ItemGrabType grabType = ItemGrabType.Small;
 
-    private ScanUI ui;
+    protected ScanUI ui;
 
-    private Renderer render;
+    protected Renderer render;
 
-    private Rigidbody rigid;
+    protected Rigidbody rigid;
+
+    protected bool isGrabbed = false;
+
+    public bool IsGrabbed
+    {
+        get
+        {
+            if(IsOnGround() && isGrabbed)
+            {
+                isGrabbed = false;
+            } 
+            return isGrabbed;
+        }
+        set
+        {
+            isGrabbed = value;
+        }
+    }
 
     public Renderer Render
     {
@@ -55,6 +73,8 @@ public class ItemBase : MonoBehaviour
         //EventManager.Instance.AddListener(Event_Type.EntityScan, this);
     }
 
+    
+
     //public void OnNotify(Event_Type type, Component sender, object param = null)
     //{
     //    if(type == Event_Type.EntityScan)
@@ -71,6 +91,12 @@ public class ItemBase : MonoBehaviour
     //        }
     //    }
     //}
+
+    public bool IsOnGround()
+    {
+        float dist = transform.localScale.y / 2 + 0.1f;
+        return Physics.Raycast(transform.position, -Vector3.down,dist);
+    }
 
     public void ScanUIOn()
     {
