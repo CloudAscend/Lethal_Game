@@ -78,7 +78,7 @@ public class PlayerInteract : PlayerBase
         {
             return;
         }
-
+        detectedItem.ScanUIOff();
         GameManager.instance.GetItem(detectedItem);
     }
 

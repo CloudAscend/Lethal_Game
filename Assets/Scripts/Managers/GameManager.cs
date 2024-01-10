@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 
     public readonly static int ScanDistance = 15;
 
+    public static int Money = 0;
+
+
     private int curHand = 0;
 
     [Header("Systems")]
@@ -27,6 +30,17 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+    
+    public static void SetMoney(int value)
+    {
+        Money = value;
+    }
+
+    public ItemBase GetHeldItem()
+    {
+        handPosArray[curHand].GetChild(0).TryGetComponent(out ItemBase item);
+        return item;
     }
 
     public void GetItem(ItemBase item)

@@ -4,11 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-//public class YieldReturnVariables
-//{
-//    public static readonly WaitForEndOfFrame WaitForEndOfFrame = new();
-    
-//}
+public class YieldReturnVariables
+{
+    private static readonly Dictionary<float, WaitForSeconds> _waitForSeconds = new Dictionary<float, WaitForSeconds>();
+
+    public static WaitForSeconds WaitForSeconds(float time)
+    {
+        WaitForSeconds waitForSeconds;
+        if(_waitForSeconds.TryGetValue(time, out waitForSeconds) == false)
+        {
+            waitForSeconds = new WaitForSeconds(time);
+            _waitForSeconds.Add(time, waitForSeconds);  
+        }
+        return waitForSeconds;
+    }
+
+}
 
 public class UIManager : MonoBehaviour
 {
@@ -20,6 +31,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ScanUI scanUI;
     [SerializeField] private StorageUI storageUI;
     [SerializeField] private Transform storagePanel;
+    [SerializeField] private TotalUI totalUI;
 
     [SerializeField] private float uiSeperation;
 
@@ -51,6 +63,13 @@ public class UIManager : MonoBehaviour
     public void SetPickUpText(bool isActive)
     {
         pickUpText.gameObject.SetActive(isActive);
+    }
+
+    public void SetTotalUIText(bool isActive, string text = "")
+    {
+        totalUI.gameObject.SetActive(isActive);
+        if(isActive)
+            totalUI.SetTotalText(text);
     }
 
     private void StartStorageListUp()

@@ -67,13 +67,14 @@ public class ItemBase : MonoBehaviour
 
     protected virtual void Start()
     {
+        Init();
         rigid = GetComponent<Rigidbody>();
         rigid.mass = weight;
 
         //EventManager.Instance.AddListener(Event_Type.EntityScan, this);
     }
 
-    
+
 
     //public void OnNotify(Event_Type type, Component sender, object param = null)
     //{
@@ -92,6 +93,14 @@ public class ItemBase : MonoBehaviour
     //    }
     //}
 
+    protected void Init()
+    {
+        if(TryGetComponent(out Rigidbody rigid) == false)
+        {
+            gameObject.AddComponent<Rigidbody>();
+        }
+    }
+
     public bool IsOnGround()
     {
         float dist = transform.localScale.y / 2 + 0.1f;
@@ -105,15 +114,17 @@ public class ItemBase : MonoBehaviour
         this.ui = ui;
     }
 
+    public void ScanUIOff()
+    {
+       if(ui != null)
+        {
+            Destroy(ui.gameObject);
+        }
+    }
+
     protected virtual void Interact()
     {
 
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-            Interact();
     }
 
 

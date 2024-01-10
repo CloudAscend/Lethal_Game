@@ -39,6 +39,8 @@ public class Scan : MonoBehaviour
         List<ItemBase> items = new List<ItemBase>();
         Collider[] hits;
         float radius = 0;
+        int totalPrice = 0;
+        UIManager.Instance.SetTotalUIText(true, $"Total : {totalPrice}");
         while (elapsedTime <= time)
         {
             scanArea.localScale = Vector3.Lerp(scanArea.localScale,GameManager.ScanDistance * Vector3.one * 2,(elapsedTime/time));
@@ -47,26 +49,27 @@ public class Scan : MonoBehaviour
             foreach(var hit in hits)
             {
                 var item = hit.GetComponent<ItemBase>();
-                if (!item.Render.isVisible) continue;
+                if(item == null) continue;
+                //Debug.Log(item.name);
+                if (!item.Render.isVisible || item.IsGrabbed) continue;
                 if(!items.Contains(item))
                 {
                     items.Add(item);
+                    totalPrice += item.price;
+                    UIManager.Instance.SetTotalUIText(true, $"Total : {totalPrice}");
                     item.ScanUIOn();
                 }
             }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        EventManager.Instance.PostNotification(Event_Type.EntityScan, this, new ScanInfo
-        {
-            playerPos = GameManager.instance.player.transform.position
-        });
         DisableScanArea();
     }
 
     private async void DisableScanArea()
     {
-        await Task.Delay(500);
+        await Task.Delay(1000);
+        UIManager.Instance.SetTotalUIText(false);
         scanArea.localScale = Vector3.zero;
         isScanning = false;
 
