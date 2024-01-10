@@ -1573,7 +1573,7 @@ MonoBehaviour:
   _interactKey:
     grabKey: 101
     dropKey: 103
-    throwKey: 100
+    throwKey: 116
   cam: {fileID: 330585546}
   dropPos: {fileID: 728734041}
   detectDistance: 2
