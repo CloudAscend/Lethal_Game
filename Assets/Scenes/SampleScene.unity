@@ -782,9 +782,9 @@ RectTransform:
   m_Father: {fileID: 1550795092}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: 255}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &444472981
@@ -1480,6 +1480,7 @@ GameObject:
   - component: {fileID: 709142841}
   - component: {fileID: 709142842}
   - component: {fileID: 709142843}
+  - component: {fileID: 709142844}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -1534,18 +1535,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7708cd1253fcb4b977dccb9f30387f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stamina: 1
-  staminaBar: {fileID: 889783531}
-  descountValue: 0.3
-  addValue: 0.2
   walkSpeed: 3
   sprintSpeed: 7
   groundDrag: 5
   jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 0
+  crouchYscale: 0
   jumpkey: 32
-  SprintKey: 304
+  sprintKey: 304
+  crouchKey: 306
+  stamina: 1
+  staminaBar: {fileID: 889783531}
+  descountValue: 0.3
+  addValue: 0.2
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
@@ -1565,9 +1569,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabable: 0
-  grabKey: 101
-  dropKey: 103
-  throwKey: 116
+  _interactKey:
+    grabKey: 0
+    dropKey: 0
+    throwKey: 0
   cam: {fileID: 330585546}
   dropPos: {fileID: 728734041}
   detectDistance: 2
@@ -1587,6 +1592,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanArea: {fileID: 1785993272}
+--- !u!114 &709142844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709142838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437a149d17e9b1041bbf66b2a31c3e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryImage: {fileID: 21300000, guid: dec2833a317dc24498d70be1ced0ec3d, type: 3}
+  price: 0
+  weight: 0
+  inventory: []
+  inventoryTrans: {fileID: 1550795092}
 --- !u!1 &728734040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,9 +2400,9 @@ RectTransform:
   m_Father: {fileID: 1550795092}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: 255}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &949858468
@@ -2994,9 +3016,9 @@ RectTransform:
   m_Father: {fileID: 1550795092}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: 255}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1426805494
@@ -3060,7 +3082,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1550795092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3081,9 +3103,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 90}
-  m_SizeDelta: {x: -572, y: -510}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -450}
+  m_SizeDelta: {x: 674, y: -1590}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1550795093
 MonoBehaviour:
@@ -3463,9 +3485,9 @@ RectTransform:
   m_Father: {fileID: 1550795092}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: 255}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2064538089
