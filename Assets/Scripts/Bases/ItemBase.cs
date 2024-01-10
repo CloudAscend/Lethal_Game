@@ -67,7 +67,7 @@ public class ItemBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        Init();
+        Init(); 
         rigid = GetComponent<Rigidbody>();
         rigid.mass = weight;
 
