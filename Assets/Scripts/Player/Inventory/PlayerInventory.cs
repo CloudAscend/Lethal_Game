@@ -9,8 +9,7 @@ public class PlayerInventory : PlayerBase
     public int price;
     public int weight;
 
-    //[SerializeField] private ItemBase[] inventory;
-    [SerializeField] private GameObject[] inventory;
+    [SerializeField] private ItemBase[] inventory;
     [SerializeField] private Transform inventoryTrans;
     private int invenValue;
 
@@ -21,8 +20,7 @@ public class PlayerInventory : PlayerBase
 
     private void Awake()
     {
-        //inventory = new ItemBase[4];
-        inventory = new GameObject[4];
+        inventory = new ItemBase[4];
     }
 
     private void Update()
@@ -32,7 +30,7 @@ public class PlayerInventory : PlayerBase
 
     private void ChooseInventory()
     {
-        if (Input.GetKey(KeyCode.Alpha1)) invenValue = 0;
+        if      (Input.GetKey(KeyCode.Alpha1)) invenValue = 0;
         else if (Input.GetKey(KeyCode.Alpha2)) invenValue = 1;
         else if (Input.GetKey(KeyCode.Alpha3)) invenValue = 2;
         else if (Input.GetKey(KeyCode.Alpha4)) invenValue = 3;
@@ -51,14 +49,15 @@ public class PlayerInventory : PlayerBase
         //}
 
         //if (invenValue)
-        inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = inventoryImage;
-        //inventory[invenValue] = item;
-        inventory[invenValue] = item.gameObject;
+        if (inventory[invenValue] == null)
+            inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = inventoryImage;
+        inventory[invenValue] = item;
     }
 
     public void RemoveInventory()
     {
-        inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = null;
+        if (inventory[invenValue] != null)
+            inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = null;
         inventory[invenValue] = null;
     }
 }
