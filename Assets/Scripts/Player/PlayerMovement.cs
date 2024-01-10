@@ -5,12 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float stamina;
-    float maxStamina;
-    public Image staminaBar;
-    public float descountValue;
-    public float addValue;
-
     private float moveSpeed; // 이동 속도
     public float walkSpeed;
     public float sprintSpeed;
@@ -22,13 +16,23 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
 
+    public float crouchSpeed;
+    public float crouchYscale;
+    private float startYscale;
+
     public KeyCode jumpkey = KeyCode.Space;
-    public KeyCode SprintKey = KeyCode.LeftShift;
+    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode crouchKey = KeyCode.LeftControl;
+
+    public float stamina;
+    float maxStamina;
+    public Image staminaBar;
+    public float descountValue;
+    public float addValue;
 
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
-
 
     public Transform orientation;
 
@@ -45,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         walking,
         sprinting,
+        crouching,
         air
     }
 
@@ -57,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         readyToJump = true;
+
+        startYscale = transform.localScale.y;
     }
 
     private void Update()
@@ -89,13 +96,27 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKey(jumpkey) && readyToJump && grounded)
+        if (Input.GetKey(jumpkey) && readyToJump && grounded)
         {
             readyToJump = false;
 
             Jump();
 
             Invoke(nameof(ReseJump), jumpCooldown);
+        }
+
+        if (Input.GetKeyDown(crouchKey))
+        {
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        }
+        if (Input.GetKey(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, crouchYscale, transform.localScale.z);
+            
+        }
+        if (Input.GetKeyUp(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, startYscale, transform.localScale.z);
         }
     }
 
@@ -104,11 +125,11 @@ public class PlayerMovement : MonoBehaviour
         // 바라보는 방향 움직이기
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        if(grounded) // 바닥일때
+        if (grounded) // 바닥일때
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
-        else if(!grounded) // 공중일때
+        else if (!grounded) // 공중일때
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
@@ -117,13 +138,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        if (grounded && Input.GetKey(SprintKey) && stamina > 0)
+        //if (Input.GetKey(crouchKey))
+        //{
+        //    state = MovementState.crouching;
+        //    moveSpeed = crouchSpeed;
+        //}
+
+        if (grounded && Input.GetKey(sprintKey) && stamina > 0)
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
             DecreaseStamina();
         }
-        else if(grounded)
+        else if (Input.GetKey(crouchKey))
+        {
+            state = MovementState.crouching;
+            moveSpeed = crouchSpeed;
+        }
+        else if (grounded)
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
