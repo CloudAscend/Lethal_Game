@@ -24,54 +24,50 @@ public class PlayerInteract : PlayerBase
     [SerializeField] private LayerMask whatIsItem;
 
     private PlayerMovement playerMovement;
-    private readonly Dictionary<Func<bool>, System.Action> _onKeyEvent = new();
+    private ItemDetection itemDetection;
+    private KeyCodeEvent keyCodeEvent = new();
 
     private ItemBase detectedItem;
 
     private void Start()
     {
         TryGetComponent(out playerMovement);
-
-        _onKeyEvent.Add(() => Input.GetKeyDown(_interactKey.grabKey), PickUp);
-        _onKeyEvent.Add(() => Input.GetKeyDown(_interactKey.dropKey), Drop);
-        _onKeyEvent.Add(() => Input.GetKeyDown(_interactKey.throwKey), ThrowItem);
+        TryGetComponent(out itemDetection);
+        keyCodeEvent.AddKeyEvent(() => Input.GetKeyDown(_interactKey.grabKey), PickUp);
+        keyCodeEvent.AddKeyEvent(() => Input.GetKeyDown(_interactKey.dropKey), Drop);
+        keyCodeEvent.AddKeyEvent(() => Input.GetKeyDown(_interactKey.throwKey), ThrowItem);
     }
 
     private void Update()
     {
-        DetectItem();
+        CheckDetectItem();
         KeyEvent();
+    }
+
+    private void CheckDetectItem()
+    {
+        detectedItem = itemDetection.DetectItem(detectDistance);
+        if (detectedItem != null)
+        {
+            UIManager.Instance.SetPickUpText(true);
+        }
+        else
+        {
+            UIManager.Instance.SetPickUpText(false);
+        }
     }
 
     private void KeyEvent()
     {
         if (Input.anyKeyDown)
         {
-            foreach (var keyEvent in _onKeyEvent)
+            foreach (var keyEvent in keyCodeEvent.GetKeyEvents())
             {
                 if (keyEvent.Key.Invoke())
                 {
                     keyEvent.Value.Invoke();
                 }
             }
-        }
-    }
-
-    private void DetectItem()
-    {
-        Debug.DrawRay(cam.position, cam.forward, Color.red);
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(cam.position, cam.forward, out hit, detectDistance, whatIsItem))
-        {
-            UIManager.Instance.SetPickUpText(true);
-            if (GameManager.instance.HasHoldItem()) return;
-
-            detectedItem = hit.collider.GetComponent<ItemBase>();
-        } else
-        {
-            UIManager.Instance.SetPickUpText(false);
         }
     }
 
@@ -91,6 +87,7 @@ public class PlayerInteract : PlayerBase
         if (GameManager.instance.HasHoldItem())
         {
             Transform dropItem = GameManager.instance.DropItem();
+            detectedItem = null;
             dropItem.position = dropPos.position;
         }
     }
@@ -106,6 +103,7 @@ public class PlayerInteract : PlayerBase
             Rigidbody rigid;
             dropItem.TryGetComponent(out rigid);
             rigid.velocity = cam.forward * 15;
+            detectedItem = null;
         }
     }
 }

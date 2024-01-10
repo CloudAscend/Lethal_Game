@@ -1480,6 +1480,7 @@ GameObject:
   - component: {fileID: 709142841}
   - component: {fileID: 709142842}
   - component: {fileID: 709142843}
+  - component: {fileID: 709142844}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -1534,18 +1535,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7708cd1253fcb4b977dccb9f30387f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stamina: 1
-  staminaBar: {fileID: 889783531}
-  descountValue: 0.3
-  addValue: 0.2
   walkSpeed: 3
   sprintSpeed: 7
   groundDrag: 5
   jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 0
+  crouchYscale: 0
   jumpkey: 32
-  SprintKey: 304
+  sprintKey: 304
+  crouchKey: 306
+  stamina: 1
+  staminaBar: {fileID: 889783531}
+  descountValue: 0.3
+  addValue: 0.2
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
@@ -1565,9 +1569,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabable: 0
-  grabKey: 101
-  dropKey: 103
-  throwKey: 116
+  _interactKey:
+    grabKey: 101
+    dropKey: 103
+    throwKey: 116
   cam: {fileID: 330585546}
   dropPos: {fileID: 728734041}
   detectDistance: 2
@@ -1587,6 +1592,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanArea: {fileID: 1785993272}
+--- !u!114 &709142844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709142838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe39039a308a04468b9ee7f76c4ecf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 330585546}
 --- !u!1 &728734040
 GameObject:
   m_ObjectHideFlags: 0
