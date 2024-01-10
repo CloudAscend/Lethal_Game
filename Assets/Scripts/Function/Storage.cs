@@ -36,8 +36,8 @@ public class Storage : MonoBehaviour
     {
         if (!curStorageItems.Contains(item))
         {
-            curStorageItems.Add(item);
             UIManager.Instance.CreateStorageUI(item);
+            curStorageItems.Add(item);
         }
     }
 
@@ -57,6 +57,15 @@ public class Storage : MonoBehaviour
         }
     }
 
+    public bool CheckDupeItem(ItemBase item)
+    {
+        if (StorageItems.Contains(item))
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
 
@@ -64,6 +73,7 @@ public class Storage : MonoBehaviour
         {
             ItemBase item;
             other.TryGetComponent(out item);
+            if (CheckDupeItem(item)) return;    
             CheckItemsInStorageArea();
             DetectItemInStorageArea(item);
         }
@@ -74,6 +84,7 @@ public class Storage : MonoBehaviour
         {
             ItemBase item;
             other.TryGetComponent(out item);
+            if(!CheckDupeItem(item)) return;
             curStorageItems.Remove(item);
             CheckItemsInStorageArea();
         }

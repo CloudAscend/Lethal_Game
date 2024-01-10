@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private int curHand = 0;
 
     [Header("Systems")]
-    [SerializeField] Storage storage;
+    public Storage storage;
 
     [Header("Objects")]
     public GameObject player;

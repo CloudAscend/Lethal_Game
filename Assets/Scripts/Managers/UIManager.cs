@@ -86,6 +86,7 @@ public class UIManager : MonoBehaviour
 
     public StorageUI CreateStorageUI(ItemBase item)
     {
+        if(GameManager.instance.storage.CheckDupeItem(item)) return null;
         var ui = Instantiate(storageUI, storagePanel);
         ui.transform.localPosition = Vector3.zero;
         ui.Init(item);
