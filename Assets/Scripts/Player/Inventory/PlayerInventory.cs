@@ -1,28 +1,41 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
-public class InventInfo
-{
-    public Sprite inventory;
-    public int price;
-    public int weight;
-}
-
 public class PlayerInventory : PlayerBase
 {
-    public List<InventInfo> inventInfo;
+    public Sprite inventoryImage;
+    public int price;
+    public int weight;
 
-    [SerializeField] private GameObject inventory;
-    private Transform inventoryTrans;
+    //[SerializeField] private ItemBase[] inventory;
+    [SerializeField] private GameObject[] inventory;
+    [SerializeField] private Transform inventoryTrans;
     private int invenValue;
 
-    private void Start()
+    //private void Start()
+    //{
+    //    inventoryTrans = inventory.transform;
+    //}
+
+    private void Awake()
     {
-        inventoryTrans = inventory.transform;
+        //inventory = new ItemBase[4];
+        inventory = new GameObject[4];
+    }
+
+    private void Update()
+    {
+        ChooseInventory();
+    }
+
+    private void ChooseInventory()
+    {
+        if (Input.GetKey(KeyCode.Alpha1)) invenValue = 0;
+        else if (Input.GetKey(KeyCode.Alpha2)) invenValue = 1;
+        else if (Input.GetKey(KeyCode.Alpha3)) invenValue = 2;
+        else if (Input.GetKey(KeyCode.Alpha4)) invenValue = 3;
     }
 
     public void AddInventory(ItemBase item)
@@ -37,15 +50,15 @@ public class PlayerInventory : PlayerBase
         //        break;
         //}
 
-        inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = inventInfo[0].inventory;
-
-        invenValue++;
+        //if (invenValue)
+        inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = inventoryImage;
+        //inventory[invenValue] = item;
+        inventory[invenValue] = item.gameObject;
     }
 
     public void RemoveInventory()
     {
-        invenValue--;
-
         inventoryTrans.GetChild(invenValue).GetComponent<Image>().sprite = null;
+        inventory[invenValue] = null;
     }
 }

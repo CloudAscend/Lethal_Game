@@ -1601,11 +1601,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437a149d17e9b1041bbf66b2a31c3e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventInfo:
-  - inventory: {fileID: 21300000, guid: dec2833a317dc24498d70be1ced0ec3d, type: 3}
-    price: 0
-    weight: 0
-  inventory: {fileID: 1550795091}
+  inventoryImage: {fileID: 21300000, guid: dec2833a317dc24498d70be1ced0ec3d, type: 3}
+  price: 0
+  weight: 0
+  inventory: []
+  inventoryTrans: {fileID: 1550795092}
 --- !u!1 &728734040
 GameObject:
   m_ObjectHideFlags: 0
