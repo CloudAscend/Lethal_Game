@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
 
     private int curHand = 0;
 
+    [Header("Systems")]
+    public Storage storage;
+
     [Header("Objects")]
     public GameObject player;
     public Transform[] handPosArray;
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
             item.transform.parent = handPosArray[0];
             curHand = 0;
         }
+        item.IsGrabbed = true;
         item.GetComponent<Rigidbody>().useGravity = false;
         item.GetComponent<Rigidbody>().isKinematic = true;
         item.transform.localRotation = Quaternion.identity;
@@ -48,6 +52,7 @@ public class GameManager : MonoBehaviour
     public Transform DropItem()
     {
         Transform dropItem = handPosArray[curHand].GetChild(0);
+        
         dropItem.parent = null;
         dropItem.GetComponent<Rigidbody>().useGravity = true;
         dropItem.GetComponent<Rigidbody>().isKinematic = false;
@@ -57,5 +62,10 @@ public class GameManager : MonoBehaviour
     public bool HasHoldItem()
     {
         return handPosArray[curHand].childCount > 0;
+    }
+
+    public void UpdateStorageItems()
+    {
+        storage.CheckItemsInStorageArea();
     }
 }
