@@ -25,7 +25,9 @@ public class Scan : MonoBehaviour
     {
         if(Input.GetMouseButton(1) && !isScanning)
         {
+            GameManager.instance.UpdateStorageItems();
             StartCoroutine(ScanEntity(0.5f));
+
         }
     }
 
