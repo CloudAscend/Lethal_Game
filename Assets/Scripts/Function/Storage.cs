@@ -24,7 +24,8 @@ public class Storage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //CheckItemsInStorageArea();
+        //UpdateItemsInStorageArea();
     }
 
     private void FixedUpdate()
@@ -40,6 +41,26 @@ public class Storage : MonoBehaviour
             curStorageItems.Add(item);
         }
     }
+
+    //private void UpdateItemsInStorageArea()
+    //{
+    //    List<ItemBase> list = new List<ItemBase>();
+    //    List<ItemBase> removeList = new List<ItemBase>();
+    //    Collider[] hits = Physics.OverlapBox(transform.position, transform.localScale,Quaternion.identity,LayerMask.GetMask("Item"));
+    //    foreach(Collider c in hits)
+    //    {
+    //        c.TryGetComponent(out ItemBase item);
+    //        DetectItemInStorageArea(item);
+    //        list.Add(item); 
+    //    }
+    //    foreach(ItemBase item in curStorageItems)
+    //    {
+    //        if(!list.Contains(item))
+    //        {
+    //            removeList.Remove(item);
+    //        }
+    //    }
+    //}
 
     public void CheckItemsInStorageArea()
     {
@@ -66,14 +87,28 @@ public class Storage : MonoBehaviour
         return false;
     }
 
+    private bool IsItemInArea(ItemBase item)
+    {
+        Collider[] hits = Physics.OverlapBox(transform.position, transform.localScale, Quaternion.identity, LayerMask.GetMask("Item"));
+        foreach(Collider hit in hits)
+        {
+            hit.TryGetComponent(out ItemBase _item);
+            if(item.Equals(_item)) return true;
+        }
+        return false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
 
         if (LayerMask.LayerToName(other.gameObject.layer) == "Item")
         {
+            if (other.transform.parent != null) return;
             ItemBase item;
             other.TryGetComponent(out item);
-            if (CheckDupeItem(item)) return;    
+            if (item.IsGrabbed) return;
+            if (CheckDupeItem(item)) return;
+            Debug.Log($"{other.name}, {other.transform.parent}");
             CheckItemsInStorageArea();
             DetectItemInStorageArea(item);
         }
@@ -84,7 +119,8 @@ public class Storage : MonoBehaviour
         {
             ItemBase item;
             other.TryGetComponent(out item);
-            if(!CheckDupeItem(item)) return;
+            if (IsItemInArea(item)) return;
+            if (!CheckDupeItem(item)) return;
             curStorageItems.Remove(item);
             CheckItemsInStorageArea();
         }

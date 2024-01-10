@@ -105,15 +105,17 @@ public class ItemBase : MonoBehaviour
         this.ui = ui;
     }
 
+    public void ScanUIOff()
+    {
+       if(ui != null)
+        {
+            Destroy(ui.gameObject);
+        }
+    }
+
     protected virtual void Interact()
     {
 
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-            Interact();
     }
 
 
