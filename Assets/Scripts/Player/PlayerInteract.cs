@@ -65,6 +65,8 @@ public class PlayerInteract : PlayerBase
             {
                 Transform dropItem = GameManager.instance.DropItem();
                 dropItem.position = dropPos.position;
+
+                GameManager.instance.player.GetComponent<PlayerInventory>().RemoveInventory();
             }
         }
     }
@@ -82,6 +84,8 @@ public class PlayerInteract : PlayerBase
                 Rigidbody rigid;
                 dropItem.TryGetComponent(out rigid);
                 rigid.velocity = cam.forward * 15;
+
+                GameManager.instance.player.GetComponent<PlayerInventory>().RemoveInventory();
             }
         }
     }
