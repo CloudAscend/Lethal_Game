@@ -67,13 +67,14 @@ public class ItemBase : MonoBehaviour
 
     protected virtual void Start()
     {
+        Init();
         rigid = GetComponent<Rigidbody>();
         rigid.mass = weight;
 
         //EventManager.Instance.AddListener(Event_Type.EntityScan, this);
     }
 
-    
+
 
     //public void OnNotify(Event_Type type, Component sender, object param = null)
     //{
@@ -91,6 +92,14 @@ public class ItemBase : MonoBehaviour
     //        }
     //    }
     //}
+
+    protected void Init()
+    {
+        if(TryGetComponent(out Rigidbody rigid) == false)
+        {
+            gameObject.AddComponent<Rigidbody>();
+        }
+    }
 
     public bool IsOnGround()
     {
