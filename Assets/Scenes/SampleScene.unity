@@ -1536,18 +1536,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7708cd1253fcb4b977dccb9f30387f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stamina: 1
-  staminaBar: {fileID: 889783531}
-  descountValue: 0.3
-  addValue: 0.2
   walkSpeed: 3
   sprintSpeed: 7
   groundDrag: 5
   jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 2.5
+  crouchYscale: 0.5
   jumpkey: 32
-  SprintKey: 304
+  sprintKey: 304
+  crouchKey: 306
+  stamina: 1
+  staminaBar: {fileID: 889783531}
+  descountValue: 0.3
+  addValue: 0.2
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
@@ -1567,9 +1570,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabable: 0
-  grabKey: 101
-  dropKey: 103
-  throwKey: 116
+  _interactKey:
+    grabKey: 101
+    dropKey: 103
+    throwKey: 100
   cam: {fileID: 330585546}
   dropPos: {fileID: 728734041}
   detectDistance: 2
