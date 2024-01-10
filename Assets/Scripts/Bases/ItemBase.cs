@@ -35,6 +35,8 @@ public class ItemBase : MonoBehaviour
 
     private Renderer render;
 
+    private Rigidbody rigid;
+
     public Renderer Render
     {
         get 
@@ -47,6 +49,9 @@ public class ItemBase : MonoBehaviour
 
     protected virtual void Start()
     {
+        rigid = GetComponent<Rigidbody>();
+        rigid.mass = weight;
+
         //EventManager.Instance.AddListener(Event_Type.EntityScan, this);
     }
 
