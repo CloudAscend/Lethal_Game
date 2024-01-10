@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
         item.GetComponent<Rigidbody>().isKinematic = true;
         item.transform.localRotation = Quaternion.identity;
         item.transform.localPosition = Vector3.zero;
+
+        player.GetComponent<PlayerInventory>().AddInventory(item);
     }
 
     public Transform DropItem()
