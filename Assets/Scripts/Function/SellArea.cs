@@ -22,7 +22,7 @@ public class SellArea : MonoBehaviour
 
     public void SellAllItems()
     {
-        sellItems.Clear();
+        
         sellItemInfoLists.Clear();
         int price = 0;
         foreach(ItemBase item in sellItems)
@@ -31,13 +31,14 @@ public class SellArea : MonoBehaviour
             {
                 price += item.price;
                 sellItemInfoLists.Add(
-                    new SellInfo { name = item.id, price = price }    
+                    new SellInfo { name = item.id, price = item.price }    
                 );
                 Destroy(item.gameObject);
             }
         }
         GameManager.SetMoney(GameManager.Money + price);
         UIManager.Instance.ShowSellItemUI(sellItemInfoLists,price);
+        sellItems.Clear();
 
     }
 
