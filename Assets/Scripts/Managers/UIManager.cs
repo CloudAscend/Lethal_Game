@@ -64,7 +64,6 @@ public class UIManager : MonoBehaviour
         {
             weightText.text = $"{movement.playerweight}kg";
             float gb =  (1 - (movement.playerweight / 50));
-            Debug.Log(gb);
             Color color = new Color(255, gb, gb);
             weightText.color = color;
         }

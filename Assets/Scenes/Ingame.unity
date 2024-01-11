@@ -89320,6 +89320,11 @@ PrefabInstance:
       propertyPath: crouchYscale
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7583809756904343127, guid: 17c9c2083ce143248aa0944a2ff00834,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 7583809756904343128, guid: 17c9c2083ce143248aa0944a2ff00834,
         type: 3}
       propertyPath: m_RootOrder
