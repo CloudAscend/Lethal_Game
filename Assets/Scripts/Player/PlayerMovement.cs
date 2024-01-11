@@ -40,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
+    private float currentMoveSpeed;
+    private float playerweight;
+
     Vector3 moveDirection;
 
     Rigidbody rb;
@@ -81,11 +84,15 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             rb.drag = groundDrag;
+            currentMoveSpeed = rb.velocity.magnitude;
         }
         else
         {
             rb.drag = 0;
+            currentMoveSpeed = 0;
         }
+
+        
     }
 
     private void FixedUpdate()
@@ -100,26 +107,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(jumpkey) && readyToJump && grounded)
         {
-            readyToJump = false;
+            if (!(stamina >= 0.2f))
+            {
+                return;
+            }
+            else
+            {
+                readyToJump = false;
 
-            Jump();
-
-            Invoke(nameof(ReseJump), jumpCooldown);
+                SpendStamina(0.2f);
+                Jump();
+                Invoke(nameof(ReseJump), jumpCooldown);
+            }
+            
         }
-
-
-        //if (Input.GetKeyDown(crouchKey))
-        //{
-        //    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        //}
-        //if (Input.GetKey(crouchKey))
-        //{
-        //    transform.localScale = new Vector3(transform.localScale.x, crouchYscale, transform.localScale.z);
-        //}
-        //if (Input.GetKeyUp(crouchKey))
-        //{
-        //    transform.localScale = new Vector3(transform.localScale.x, startYscale, transform.localScale.z);
-        //}
 
         if (Input.GetKeyDown(crouchKey) && !crouch)
         {
@@ -158,24 +159,24 @@ public class PlayerMovement : MonoBehaviour
         //    moveSpeed = crouchSpeed;
         //}
 
-        if (crouch && Input.GetKey(crouchKey))
+        if (crouch)
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
-        }
-        else if (crouch && grounded && Input.GetKey(sprintKey) && stamina > 0)
-        {
-            state = MovementState.sprinting;
-            moveSpeed = sprintSpeed;
-            DecreaseStamina();
-            crouch = false;
-            transform.localScale = new Vector3(transform.localScale.x, startYscale, transform.localScale.z);
+            IncreaseStamina();
         }
         else if (grounded && Input.GetKey(sprintKey) && stamina > 0)
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
-            DecreaseStamina();
+            if(currentMoveSpeed > 4)
+            {
+                DecreaseStamina();
+            }
+            else
+            {
+                IncreaseStamina();
+            }
         }
         else if (grounded)
         {
