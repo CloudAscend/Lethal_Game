@@ -9,7 +9,7 @@ public class PlayerInventory : PlayerBase
     public int price;
     public int weight;
 
-    public ItemBase[] inventory;
+    public static ItemBase[] inventory;
     [SerializeField] private Image[] inventoryTrans;
     public static int invenValue;
 
@@ -57,10 +57,14 @@ public class PlayerInventory : PlayerBase
             if (index != invenValue && inventory[index] != null)
                 inventory[index].gameObject.SetActive(false);
         }
+
+        GameManager.instance.player.GetComponent<PlayerMovement>().AddInventoryWeight(item.weight);
     }
 
     public void RemoveInventory()
     {
+
+        GameManager.instance.player.GetComponent<PlayerMovement>().RemoveInventoryWeight(inventory[invenValue].weight);
         if (inventory[invenValue] != null)
         {
             inventoryTrans[invenValue].gameObject.SetActive(false);

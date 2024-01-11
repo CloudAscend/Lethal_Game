@@ -136,6 +136,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void AddInventoryWeight(int weight) //인벤토리 무게 추가
+    {
+        playerweight += weight;
+    }
+
+    public void RemoveInventoryWeight(int weight) //인벤토리 무게 감소
+    {
+        playerweight -= weight;
+    }
+
     private void MovePlayer() // 움직임
     {
         float groundedmove = moveSpeed - (playerweight / 100);

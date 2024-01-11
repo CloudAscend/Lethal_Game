@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     {
 
         //Transform dropItem = handPosArray[curHand].GetChild(0);
-        Transform dropItem = player.GetComponent<PlayerInventory>().inventory[curInventory].transform;
+        Transform dropItem = PlayerInventory.inventory[curInventory].transform;
 
         dropItem.parent = null;
         dropItem.GetComponent<Rigidbody>().useGravity = true;
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     public bool HasHoldItem()
     {
-        return player.GetComponent<PlayerInventory>().inventory[curInventory] != null;
+        return PlayerInventory.inventory[curInventory] != null;
         //return handPosArray[curHand].childCount > 0;
     }
 
