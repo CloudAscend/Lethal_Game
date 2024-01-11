@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Cube
   price: 10
-  weight: 1
+  weight: 5
   itemType: 0
   grabType: 0
 --- !u!54 &5104173571016771886

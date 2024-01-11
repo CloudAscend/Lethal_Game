@@ -130,6 +130,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Nuclear Trash
   price: 100
-  weight: 10
+  weight: 25
   itemType: 0
   grabType: 1
