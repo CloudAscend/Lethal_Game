@@ -50,6 +50,7 @@ public class PlayerInventory : PlayerBase
         else if (wheelInput < 0)
         {
             invenValue--;
+            if (invenValue < 0) invenValue = 3;
         }
         else
         {
