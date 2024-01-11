@@ -160,6 +160,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Landmine
   price: 0
-  weight: 5
+  weight: 10
   itemType: 1
   grabType: 0

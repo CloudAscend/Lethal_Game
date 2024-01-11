@@ -455,7 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Pistol
   price: 150
-  weight: 3
+  weight: 15
   itemType: 2
   grabType: 0
 --- !u!1 &3206772545262591012

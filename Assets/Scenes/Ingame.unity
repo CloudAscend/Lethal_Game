@@ -89058,6 +89058,12 @@ PrefabInstance:
       objectReference: {fileID: 819242931}
     - target: {fileID: 7583809756904343123, guid: 17c9c2083ce143248aa0944a2ff00834,
         type: 3}
+      propertyPath: inventoryImage
+      value: 
+      objectReference: {fileID: 21300000, guid: bda92b6c67110ba48b45f6f4e23ef996,
+        type: 3}
+    - target: {fileID: 7583809756904343123, guid: 17c9c2083ce143248aa0944a2ff00834,
+        type: 3}
       propertyPath: inventoryTrans.Array.data[0]
       value: 
       objectReference: {fileID: 3934103730924867540}
@@ -89088,9 +89094,24 @@ PrefabInstance:
       objectReference: {fileID: 819242932}
     - target: {fileID: 7583809756904343126, guid: 17c9c2083ce143248aa0944a2ff00834,
         type: 3}
+      propertyPath: walkSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583809756904343126, guid: 17c9c2083ce143248aa0944a2ff00834,
+        type: 3}
       propertyPath: staminaBar
       value: 
       objectReference: {fileID: 1806322731}
+    - target: {fileID: 7583809756904343126, guid: 17c9c2083ce143248aa0944a2ff00834,
+        type: 3}
+      propertyPath: crouchSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583809756904343126, guid: 17c9c2083ce143248aa0944a2ff00834,
+        type: 3}
+      propertyPath: crouchYscale
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7583809756904343128, guid: 17c9c2083ce143248aa0944a2ff00834,
         type: 3}
       propertyPath: m_RootOrder
