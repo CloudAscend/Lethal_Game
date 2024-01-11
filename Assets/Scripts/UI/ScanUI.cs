@@ -15,6 +15,8 @@ public class ScanUI : MonoBehaviour
 
     ItemBase item;
 
+    ItemTypeEvents typeEvents = new();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,22 @@ public class ScanUI : MonoBehaviour
     public void Init(ItemBase item)
     {
         this.item = item;
+        if(TryGetComponent(out Image img1) == false)
+        {
+            img1 = gameObject.AddComponent<Image>();
+        }
+        if(nameInfo.TryGetComponent(out Image img2) == false)
+        {
+            img2 = nameInfo.gameObject.AddComponent<Image>();
+        }
+        if (priceInfo.TryGetComponent(out Image img3) == false)
+        {
+            img3 = priceInfo.gameObject.AddComponent<Image>();
+        }
+        Color color = typeEvents.GetItemScanColor(item.itemType);
+        img1.color = color;
+        img2.color = color;
+        img3.color = color;
     }
 
     private void Scaned()
