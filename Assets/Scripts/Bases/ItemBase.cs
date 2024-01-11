@@ -22,6 +22,14 @@ public enum ItemType
     Useable
 }
 
+public enum ItemInteractType
+{
+    PickUp,
+    Drop,
+    Throw,
+    Use,
+    Sell,
+}
 
 public class ItemBase : MonoBehaviour
 {
@@ -38,6 +46,8 @@ public class ItemBase : MonoBehaviour
     protected Rigidbody rigid;
 
     protected bool isGrabbed = false;
+    protected bool isThrew = false;
+    protected bool isReadyToSell = false;
 
     public bool IsGrabbed
     {
@@ -53,6 +63,31 @@ public class ItemBase : MonoBehaviour
         {
             isGrabbed = value;
         }
+    }
+
+    public bool IsThrew
+    {
+        get
+        {
+            if (IsOnGround() && isThrew)
+            {
+                isThrew = false;
+            }
+            return isThrew;
+        }
+        set
+        {
+            isThrew = value;
+        }
+    }
+
+    public bool IsReadyToSell
+    {
+        get
+        {
+            return isReadyToSell;
+        }
+        
     }
 
     public Renderer Render
