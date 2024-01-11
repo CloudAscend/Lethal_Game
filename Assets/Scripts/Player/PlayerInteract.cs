@@ -50,7 +50,7 @@ public class PlayerInteract : PlayerBase
     {
         detectedItem = itemDetection.DetectItem(detectDistance);
         sellArea = itemDetection.DetectSellArea(detectDistance);
-        if (detectedItem != null && !GameManager.instance.HasHoldItem())
+        if (detectedItem != null && !GameManager.instance.HasHoldItem() && !detectedItem.itemType.Equals(ItemType.Trap))
         {
             UIManager.Instance.SetInteractText(true,"[ Pick Up ]");
         }
@@ -90,8 +90,9 @@ public class PlayerInteract : PlayerBase
             SellItem();
             return;
         } 
-        if(!g.HasHoldItem() && detectedItem != null)
+        if(!g.HasHoldItem() && detectedItem != null && !detectedItem.itemType.Equals(ItemType.Trap))
         {
+                
             PickUp();
             return;
         }

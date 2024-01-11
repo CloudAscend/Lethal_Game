@@ -148,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer() // 움직임
     {
-        float groundedmove = moveSpeed - (playerweight / 100);
+        float groundedmove = moveSpeed * (1 - (playerweight / 60));
         // 바라보는 방향 움직이기
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
@@ -181,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
-            if(currentMoveSpeed > 4)
+            if(currentMoveSpeed > 0)
             {
                 DecreaseStamina();
             }

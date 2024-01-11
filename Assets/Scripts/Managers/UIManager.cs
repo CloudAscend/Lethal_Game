@@ -33,13 +33,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform storagePanel;
     [SerializeField] private TotalUI totalUI;
     [SerializeField] private SellUI sellUI;
-
+    [SerializeField] private Text weightText;
     [SerializeField] private float uiSeperation;
 
     List<StorageUI> storageList = new();
     Queue<IEnumerator> storageUIQueue = new();
 
     StorageUI curStorageUI;
+
+    PlayerMovement movement;
 
     bool isStorageListUp = false;
 
@@ -58,7 +60,14 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(GameManager.instance.player.TryGetComponent(out movement) == true)
+        {
+            weightText.text = $"{movement.playerweight}kg";
+            float gb =  (1 - (movement.playerweight / 50));
+            Debug.Log(gb);
+            Color color = new Color(255, gb, gb);
+            weightText.color = color;
+        }
     }
 
     public void SetInteractText(bool isActive, string text = "")
