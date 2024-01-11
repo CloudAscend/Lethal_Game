@@ -17,11 +17,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Systems")]
     public Storage storage;
+    public SellArea sellArea;
 
     [Header("Objects")]
     public GameObject player;
     public Transform[] handPosArray;
     public Camera cam;
+    public GameObject callButton;
 
     [Header("Bases")]
     public ItemBase itemBase;
@@ -39,6 +41,11 @@ public class GameManager : MonoBehaviour
         Money = value;
     }
 
+    public void SellItems()
+    {
+        sellArea.SellAllItems();
+    }
+         
     public ItemBase GetHeldItem()
     {
         handPosArray[curHand].GetChild(0).TryGetComponent(out ItemBase item);

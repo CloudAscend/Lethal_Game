@@ -33,6 +33,8 @@ public enum ItemInteractType
 
 public class ItemBase : MonoBehaviour
 {
+    public string id;
+    
     public int price;
     public int weight;
 
@@ -48,6 +50,8 @@ public class ItemBase : MonoBehaviour
     protected bool isGrabbed = false;
     protected bool isThrew = false;
     protected bool isReadyToSell = false;
+
+    protected IItemInteractable interactable;
 
     public bool IsGrabbed
     {
@@ -86,6 +90,11 @@ public class ItemBase : MonoBehaviour
         get
         {
             return isReadyToSell;
+        }
+
+        set
+        {
+            isReadyToSell = value;
         }
         
     }
@@ -128,6 +137,12 @@ public class ItemBase : MonoBehaviour
     //    }
     //}
 
+    private void Update()
+    {
+        if (isGrabbed && IsOnGround())
+            isGrabbed = false;
+    }
+
     protected void Init()
     {
         if(TryGetComponent(out Rigidbody rigid) == false)
@@ -136,9 +151,19 @@ public class ItemBase : MonoBehaviour
         }
     }
 
+    public bool CheckPickUpItem()
+    {
+        Debug.Log(isGrabbed + " " + isReadyToSell + " " + IsOnGround());
+        if(isGrabbed) return false;
+        //if(!IsOnGround()) return false;  
+        if(IsReadyToSell) return false;
+        return true;
+    }
+
     public bool IsOnGround()
     {
-        float dist = transform.localScale.y / 2 + 0.1f;
+        float dist = transform.localScale.y / 2 + 0.25f;
+        Debug.DrawRay(transform.position, Vector3.down, Color.green, 1);
         return Physics.Raycast(transform.position, -Vector3.down,dist);
     }
 
@@ -157,9 +182,13 @@ public class ItemBase : MonoBehaviour
         }
     }
 
-    protected virtual void Interact()
+    public virtual void Interact(IItemInteractable interactable)
     {
-
+        this.interactable = interactable;
+        if(interactable != null)
+        {
+            this.interactable.Interact(this);
+        }
     }
 
 

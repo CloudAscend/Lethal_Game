@@ -73,6 +73,15 @@ public class PlayerInventory : PlayerBase
         inventory[invenValue] = null;
     }
 
+    public bool IsInventoryFull()
+    {
+        for(int i = 0; i < inventory.Length; i++)
+        {
+            if(inventory[i] == null) return false;
+        }
+        return true;    
+    }
+
     private void ChangeInventory(int inventoryValue)
     {
         GameManager.curInventory = inventoryValue;

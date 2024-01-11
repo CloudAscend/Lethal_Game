@@ -28,12 +28,13 @@ public class PlayerInteract : PlayerBase
     private KeyCodeEvent keyCodeEvent = new();
 
     private ItemBase detectedItem;
+    private SellArea sellArea;
 
     private void Start()
     {
         TryGetComponent(out playerMovement);
         TryGetComponent(out itemDetection);
-        keyCodeEvent.AddKeyEvent(() => Input.GetKeyDown(_interactKey.grabKey), PickUp);
+        keyCodeEvent.AddKeyEvent(() => Input.GetKeyDown(_interactKey.grabKey), InteractItem);
         keyCodeEvent.AddKeyEvent(() => Input.GetKeyDown(_interactKey.dropKey), Drop);
         keyCodeEvent.AddKeyEvent(() => Input.GetKeyDown(_interactKey.throwKey), ThrowItem);
     }
@@ -41,25 +42,29 @@ public class PlayerInteract : PlayerBase
     private void Update()
     {
         CheckDetectItem();
+        //CheckSellArea();
         KeyEvent();
     }
 
     private void CheckDetectItem()
     {
         detectedItem = itemDetection.DetectItem(detectDistance);
-
-        if (detectedItem != null)
+        sellArea = itemDetection.DetectSellArea(detectDistance);
+        if (detectedItem != null && !GameManager.instance.HasHoldItem())
         {
-            if (GameManager.instance.HasHoldItem())
-            {
-                UIManager.Instance.SetPickUpText(false);
-                return;
-            }
-            UIManager.Instance.SetPickUpText(true);
+            UIManager.Instance.SetInteractText(true,"[ Pick Up ]");
+        }
+        else if(sellArea != null && GameManager.instance.HasHoldItem())
+        {
+            UIManager.Instance.SetInteractText(true, "[ Sell Item ]");
+        }
+        else if(sellArea == null && detectedItem == null && itemDetection.IsDetected(detectDistance,GameManager.instance.callButton))
+        {
+            UIManager.Instance.SetInteractText(true, "[ Call ]");
         }
         else
         {
-            UIManager.Instance.SetPickUpText(false);
+            UIManager.Instance.SetInteractText(false);
         }
     }
 
@@ -75,6 +80,45 @@ public class PlayerInteract : PlayerBase
                 }
             }
         }
+    }
+
+    private void InteractItem()
+    {
+        var g = GameManager.instance;
+        if(g.HasHoldItem() && itemDetection.CheckSellArea(detectDistance) && sellArea != null)
+        {
+            Debug.Log("Test1");
+            SellItem();
+            return;
+        } 
+        if(!g.HasHoldItem() && detectedItem != null)
+        {
+            Debug.Log("Test2");
+            PickUp();
+            return;
+        }
+        if(itemDetection.IsDetected(detectDistance, GameManager.instance.callButton))
+        {
+            GameManager.instance.SellItems();
+            Debug.Log("Test3");
+            return;
+        }
+        Debug.Log("Test4");
+        //else if()
+    }
+
+    private void SellItem()
+    {
+        Transform dropItem = GameManager.instance.DropItem();
+        detectedItem = null;
+        dropItem.position = dropPos.position;
+        dropItem.TryGetComponent(out ItemBase item);
+        dropItem.TryGetComponent(out Rigidbody rigidbody);
+        rigidbody.useGravity = false;
+        rigidbody.isKinematic = true;
+        item.IsGrabbed = false;
+        GameManager.instance.player.GetComponent<PlayerInventory>().RemoveInventory();
+        sellArea.ItemSell(item);
     }
 
     private void PickUp()
@@ -95,7 +139,10 @@ public class PlayerInteract : PlayerBase
             Transform dropItem = GameManager.instance.DropItem();
             detectedItem = null;
             dropItem.position = dropPos.position;
+            dropItem.TryGetComponent(out ItemBase item);
+            item.IsGrabbed = false;
             GameManager.instance.player.GetComponent<PlayerInventory>().RemoveInventory();
+            
         }
     }
 

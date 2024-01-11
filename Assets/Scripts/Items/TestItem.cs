@@ -9,8 +9,8 @@ public class TestItem : ItemBase
         base.Start();
     }
 
-    protected override void Interact()
+    public override void Interact(IItemInteractable item)
     {
-        base.Interact();
+        base.Interact(item);
     }
 }

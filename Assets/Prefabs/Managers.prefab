@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3025761723394096251
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3025761723394096249}
+  - component: {fileID: 3025761723394096248}
+  - component: {fileID: 3025761723394096246}
+  - component: {fileID: 3025761723394096247}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3025761723394096249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025761723394096251}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.999838, y: -4.892367, z: 2.2737546}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3025761723394096248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025761723394096251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b7231b740c6d94e83196383213cfeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storage: {fileID: 0}
+  sellArea: {fileID: 0}
+  player: {fileID: 0}
+  handPosArray:
+  - {fileID: 0}
+  - {fileID: 0}
+  cam: {fileID: 0}
+  callButton: {fileID: 0}
+  itemBase: {fileID: 0}
+  itemShow: {fileID: 0}
+--- !u!114 &3025761723394096246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025761723394096251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c8a7645bb119445a4c4dd2c682342e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scanCanvas: {fileID: 0}
+  pickUpText: {fileID: 0}
+  scanUI: {fileID: 1899745657627235611, guid: 797634f8b5a7bc54283583c847e645ac, type: 3}
+  storageUI: {fileID: 4925467945554018940, guid: 29bba5dbdc265444d9b0d49c31a6fefc,
+    type: 3}
+  storagePanel: {fileID: 0}
+  totalUI: {fileID: 0}
+  sellUI: {fileID: 0}
+  uiSeperation: 240
+--- !u!114 &3025761723394096247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025761723394096251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 991d878df702a0b43b1300ec1e0c222b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

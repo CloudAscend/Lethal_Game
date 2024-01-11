@@ -63,7 +63,7 @@ public class ScanUI : MonoBehaviour
     {
         nameInfo.gameObject.SetActive(true);
         priceInfo.gameObject.SetActive(true);
-        nameText.text = item.name;
+        nameText.text = item.id;
         priceText.text = $"АЁАн : {item.price}";  
         DisableUI();
     }
