@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     float verticalInput;
 
     private float currentMoveSpeed;
-    private float playerweight;
+    public float playerweight;  // private 으로 바꿔야함
 
     Vector3 moveDirection;
 
@@ -98,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        //Debug.Log("스피드 첵크" + currentMoveSpeed);
     }
 
     private void MyInput()
@@ -139,6 +140,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // 바라보는 방향 움직이기
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        moveSpeed = moveSpeed - (playerweight / 100);
 
         if (grounded) // 바닥일때
         {
