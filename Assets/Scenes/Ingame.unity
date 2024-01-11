@@ -7912,6 +7912,7 @@ MonoBehaviour:
   - {fileID: 1880987984620441546, guid: 0c15fbe8407ca79408e15efc15536ad1, type: 3}
   - {fileID: 8947029348679966134, guid: c1de07788db1821448362ff4404b9cf1, type: 3}
   - {fileID: 7309248632708633314, guid: e42f2384b33c46345a82e77871518209, type: 3}
+  - {fileID: 5534650763675572607, guid: e699b072b6f924c47829e2d1e1ccc982, type: 3}
   itemSpawnList:
   - {fileID: 1318734354}
   - {fileID: 1355754192}
@@ -79414,6 +79415,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 645044325}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1727348374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7583809756961249512, guid: 17c9c2083ce143248aa0944a2ff00834,
+    type: 3}
+  m_PrefabInstance: {fileID: 1936155937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1727348379
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727348374}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1727391756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89274,7 +89295,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7583809756961249510, guid: 17c9c2083ce143248aa0944a2ff00834, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 17c9c2083ce143248aa0944a2ff00834, type: 3}
 --- !u!4 &1936155938 stripped
 Transform:
