@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
-        Debug.Log("½ºÇÇµå Ã½Å©" + currentMoveSpeed);
+        //Debug.Log("½ºÇÇµå Ã½Å©" + currentMoveSpeed);
     }
 
     private void MyInput()
