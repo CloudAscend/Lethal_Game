@@ -3,6 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
+public class ItemTypeEvents
+{
+    public ItemTypeEvents()
+    {
+        itemTypeColors.Add(ItemType.Normal,Color.green);
+        itemTypeColors.Add(ItemType.Weapon,Color.cyan);
+        itemTypeColors.Add(ItemType.Useable,Color.blue);
+        itemTypeColors.Add(ItemType.Trap,Color.red);
+    }
+    
+    private readonly Dictionary<ItemType, Color> itemTypeColors = new();
+    
+    public Color GetItemScanColor(ItemType itemType)
+    {
+        if(itemTypeColors.TryGetValue(itemType, out Color color) == false)
+        {
+            color = Color.white;
+        }
+        return color;
+    }
+}
+
 public class Scan : MonoBehaviour
 {
     [SerializeField] Transform scanArea;
