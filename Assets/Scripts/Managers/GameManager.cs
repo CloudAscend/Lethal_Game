@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     
     public static void SetMoney(int value)
