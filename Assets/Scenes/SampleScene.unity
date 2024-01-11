@@ -1947,7 +1947,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   orientation: {fileID: 956930753}
-  playerweight: 0
+  playerweight: 180
   state: 0
 --- !u!114 &709142842
 MonoBehaviour:

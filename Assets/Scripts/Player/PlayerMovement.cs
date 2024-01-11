@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
-        //Debug.Log("스피드 첵크" + currentMoveSpeed);
+        Debug.Log("스피드 첵크" + currentMoveSpeed);
     }
 
     private void MyInput()
@@ -138,14 +138,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer() // 움직임
     {
+        float groundedmove = moveSpeed - (playerweight / 100);
         // 바라보는 방향 움직이기
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        moveSpeed = moveSpeed - (playerweight / 100);
-
         if (grounded) // 바닥일때
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * groundedmove * 10f, ForceMode.Force);
         }
         else if (!grounded) // 공중일때
         {
@@ -226,9 +225,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        //jumpForce = jumpForce - (playerweight / 100);
+        float JumpPower = jumpForce - (playerweight / 10);
+
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        rb.AddForce(transform.up * JumpPower, ForceMode.Impulse);
     }
 
     private void ReseJump()
