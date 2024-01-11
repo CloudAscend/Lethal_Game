@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
 
     private int curHand = 0;
+    
+    public static int curInventory = 0;
 
     [Header("Systems")]
     public Storage storage;
@@ -45,7 +47,12 @@ public class GameManager : MonoBehaviour
 
     public void GetItem(ItemBase item)
     {
-        if(item.grabType == ItemGrabType.Big)
+        if (HasHoldItem())
+        {
+            return;
+        }
+
+        if (item.grabType == ItemGrabType.Big)
         {
             item.transform.parent = handPosArray[1];
             curHand = 1;
@@ -65,8 +72,10 @@ public class GameManager : MonoBehaviour
 
     public Transform DropItem()
     {
-        Transform dropItem = handPosArray[curHand].GetChild(0);
-        
+
+        //Transform dropItem = handPosArray[curHand].GetChild(0);
+        Transform dropItem = player.GetComponent<PlayerInventory>().inventory[curInventory].transform;
+
         dropItem.parent = null;
         dropItem.GetComponent<Rigidbody>().useGravity = true;
         dropItem.GetComponent<Rigidbody>().isKinematic = false;
@@ -75,7 +84,8 @@ public class GameManager : MonoBehaviour
 
     public bool HasHoldItem()
     {
-        return handPosArray[curHand].childCount > 0;
+        return player.GetComponent<PlayerInventory>().inventory[curInventory] != null;
+        //return handPosArray[curHand].childCount > 0;
     }
 
     public void UpdateStorageItems()

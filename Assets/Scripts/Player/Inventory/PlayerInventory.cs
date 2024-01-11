@@ -9,9 +9,9 @@ public class PlayerInventory : PlayerBase
     public int price;
     public int weight;
 
-    [SerializeField] private ItemBase[] inventory;
+    public ItemBase[] inventory;
     [SerializeField] private Image[] inventoryTrans;
-    private int invenValue;
+    public static int invenValue;
 
     //private void Start()
     //{
@@ -34,30 +34,55 @@ public class PlayerInventory : PlayerBase
         else if (Input.GetKey(KeyCode.Alpha2)) invenValue = 1;
         else if (Input.GetKey(KeyCode.Alpha3)) invenValue = 2;
         else if (Input.GetKey(KeyCode.Alpha4)) invenValue = 3;
+
+        ChangeInventory(invenValue);
     }
 
     public void AddInventory(ItemBase item)
     {
-        //switch (item.grabType)
-        //{
-        //    case ItemGrabType.Big:
-        //        theImage.sprite = inventInfo[invenValue % ].inventory;
-        //        break;
-        //    case ItemGrabType.Small:
-        //        theImage.sprite = inventInfo[invenValue].inventory;
-        //        break;
-        //}
+        if (GameManager.instance.HasHoldItem())
+        {
+            return;
+        }
 
-        //if (invenValue)
         if (inventory[invenValue] == null)
+        {
+            inventoryTrans[invenValue].gameObject.SetActive(true);
             inventoryTrans[invenValue].sprite = inventoryImage;
+        }
         inventory[invenValue] = item;
+
+        for (int index = 0; index < inventoryTrans.Length; index++)
+        {
+            if (index != invenValue && inventory[index] != null)
+                inventory[index].gameObject.SetActive(false);
+        }
     }
 
     public void RemoveInventory()
     {
         if (inventory[invenValue] != null)
+        {
+            inventoryTrans[invenValue].gameObject.SetActive(false);
             inventoryTrans[invenValue].sprite = null;
+        }
         inventory[invenValue] = null;
+    }
+
+    private void ChangeInventory(int inventoryValue)
+    {
+        GameManager.curInventory = inventoryValue;
+
+        for (int index = 0; index < inventoryTrans.Length; index++)
+        {
+            bool objectActive = index == inventoryValue == true;
+            if (inventory[index] != null)
+                inventory[index].gameObject.SetActive(objectActive);
+        }
+    }
+
+    private bool CheckInventory(int value)
+    {
+        return inventory[value] == null == true;
     }
 }
