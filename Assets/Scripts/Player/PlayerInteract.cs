@@ -47,8 +47,14 @@ public class PlayerInteract : PlayerBase
     private void CheckDetectItem()
     {
         detectedItem = itemDetection.DetectItem(detectDistance);
+
         if (detectedItem != null)
         {
+            if (GameManager.instance.HasHoldItem())
+            {
+                UIManager.Instance.SetPickUpText(false);
+                return;
+            }
             UIManager.Instance.SetPickUpText(true);
         }
         else
