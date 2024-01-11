@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class TestItem : ItemBase
 {
-    protected override void Interact()
+    protected override void Start()
     {
-        base.Interact();
+        base.Start();
+    }
+
+    public override void Interact(IItemInteractable item)
+    {
+        base.Interact(item);
     }
 }
