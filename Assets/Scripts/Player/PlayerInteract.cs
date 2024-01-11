@@ -87,24 +87,20 @@ public class PlayerInteract : PlayerBase
         var g = GameManager.instance;
         if(g.HasHoldItem() && itemDetection.CheckSellArea(detectDistance) && sellArea != null)
         {
-            Debug.Log("Test1");
             SellItem();
             return;
         } 
         if(!g.HasHoldItem() && detectedItem != null)
         {
-            Debug.Log("Test2");
             PickUp();
             return;
         }
         if(itemDetection.IsDetected(detectDistance, GameManager.instance.callButton))
         {
             GameManager.instance.SellItems();
-            Debug.Log("Test3");
             return;
         }
-        Debug.Log("Test4");
-        //else if()
+        
     }
 
     private void SellItem()
@@ -156,7 +152,9 @@ public class PlayerInteract : PlayerBase
             dropItem.position = dropPos.position;
             Rigidbody rigid;
             dropItem.TryGetComponent(out rigid);
+            dropItem.TryGetComponent(out ItemBase item);
             rigid.velocity = cam.forward * 15;
+            item.IsThrew = true;
             detectedItem = null;
             GameManager.instance.player.GetComponent<PlayerInventory>().RemoveInventory();
         }

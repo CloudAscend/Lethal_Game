@@ -140,7 +140,11 @@ public class ItemBase : MonoBehaviour
     private void Update()
     {
         if (isGrabbed && IsOnGround())
+        {
             isGrabbed = false;
+            isThrew = false;
+        }
+        
     }
 
     protected void Init()

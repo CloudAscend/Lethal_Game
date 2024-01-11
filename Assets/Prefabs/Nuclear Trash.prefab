@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8968975766084320576}
   - component: {fileID: 8947029348679966132}
   - component: {fileID: 8947029348679966135}
-  - component: {fileID: 8947029348679966134}
+  - component: {fileID: -4782715817533212119}
   m_Layer: 9
   m_Name: Nuclear Trash
   m_TagString: Untagged
@@ -116,7 +116,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 1768e940ef5fa2d4093cb81fb56533a0, type: 3}
---- !u!114 &8947029348679966134
+--- !u!114 &-4782715817533212119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,11 +125,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8947788083406639416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c081c748539abb40a46495c7a898904, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b1e09d39d678af4f921fcadf32387e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: Nuclear Trash
   price: 100
-  weight: 25
+  weight: 15
   itemType: 0
   grabType: 1
+  explosionPrefab: {fileID: 1000013462590818, guid: a756de3e816f86d4d81498362661e222,
+    type: 3}
