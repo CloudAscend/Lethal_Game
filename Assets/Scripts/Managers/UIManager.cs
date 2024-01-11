@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private StorageUI storageUI;
     [SerializeField] private Transform storagePanel;
     [SerializeField] private TotalUI totalUI;
+    [SerializeField] private SellUI sellUI;
 
     [SerializeField] private float uiSeperation;
 
@@ -60,9 +61,11 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void SetPickUpText(bool isActive)
+    public void SetInteractText(bool isActive, string text = "")
     {
         pickUpText.gameObject.SetActive(isActive);
+        if(isActive) 
+            pickUpText.text = text;
     }
 
     public void SetTotalUIText(bool isActive, string text = "")
@@ -71,6 +74,44 @@ public class UIManager : MonoBehaviour
         if(isActive)
             totalUI.SetTotalText(text);
     }
+
+    public void ShowSellItemUI(List<SellInfo> data,float totalPrice)
+    {
+        List<SellInfo> list = new List<SellInfo>();
+        Dictionary<string, int> itemCounts = new();
+
+        foreach(var item in data)
+        {
+            
+            if(itemCounts.ContainsKey(item.name))
+            {
+                itemCounts[item.name]++;
+            } else
+            {
+                itemCounts.Add(item.name, 1);
+                list.Add(item);
+            }
+        }
+        sellUI.gameObject.SetActive(true);
+        foreach(var item in list)
+        {
+            sellUI.CreateItemPriceText(
+                $"{item.name}{(itemCounts[item.name] > 1 ? $"x{itemCounts[item.name]} : {item.price * itemCounts[item.name]}" : $" : {item.price}")}"
+            );
+        }
+        sellUI.SetTotalText(true, $"Total : {totalPrice}");
+        StartCoroutine(HideSellItemUI());
+    }
+
+    IEnumerator HideSellItemUI()
+    {
+        yield return YieldReturnVariables.WaitForSeconds(2.5f);
+        sellUI.DisableAllText();
+        sellUI.SetTotalText(false);
+
+        sellUI.gameObject.SetActive(false);
+    }
+
 
     private void StartStorageListUp()
     {

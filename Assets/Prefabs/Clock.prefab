@@ -444,6 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c081c748539abb40a46495c7a898904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: Clock
   price: 80
   weight: 8
   itemType: 0
