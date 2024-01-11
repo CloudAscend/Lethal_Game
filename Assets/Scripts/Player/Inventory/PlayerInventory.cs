@@ -41,6 +41,8 @@ public class PlayerInventory : PlayerBase
 
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
 
+        invenValue %= 4;
+
         if (wheelInput > 0)
         {
             invenValue++;
@@ -48,6 +50,10 @@ public class PlayerInventory : PlayerBase
         else if (wheelInput < 0)
         {
             invenValue--;
+        }
+        else
+        {
+            invenValue %= 4;
         }
 
         invenValue %= 4;
