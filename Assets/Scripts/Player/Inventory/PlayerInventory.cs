@@ -6,6 +6,8 @@ using DG.Tweening;
 
 public class PlayerInventory : PlayerBase
 {
+    public static PlayerInventory Instance { get; private set; }
+    
     public Sprite inventoryImage;
     public int price;
     public int weight;
@@ -14,12 +16,25 @@ public class PlayerInventory : PlayerBase
     [SerializeField] private Image[] inventoryTrans;
     public static int invenValue;
 
+    private int curHand = 0;
+    [SerializeField] Transform[] handPosPivot;
+    public Transform[] handPosArray;
+    public static int curInventory = 0;
+    private GameObject player;
+
     private float size;
 
-    //private void Start()
-    //{
-    //    inventoryTrans = inventory.transform;
-    //}
+    private void Start()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        } else
+        {
+            Destroy(this.gameObject);
+        }
+        player = GameManager.instance.player;
+    }
 
     private void Awake()
     {
@@ -30,6 +45,11 @@ public class PlayerInventory : PlayerBase
     private void Update()
     {
         ChooseInventory();
+        //for(int i = 0; i < handPosArray.Length; i++)
+        //{
+        //    handPosArray[i].position = handPosPivot[i].position;
+        //    handPosArray[i].rotation = GameManager.instance.cam.transform.rotation;
+        //}
     }
 
     private void ChooseInventory()
@@ -76,7 +96,7 @@ public class PlayerInventory : PlayerBase
 
     public void AddInventory(ItemBase item)
     {
-        if (GameManager.instance.HasHoldItem())
+        if (HasHoldItem())
         {
             return;
         }
@@ -120,13 +140,30 @@ public class PlayerInventory : PlayerBase
 
     private void ChangeInventory(int inventoryValue)
     {
-        GameManager.curInventory = inventoryValue;
+        curInventory = inventoryValue;
 
         for (int index = 0; index < inventoryTrans.Length; index++)
         {
             bool objectActive = index == inventoryValue == true;
             if (inventory[index] != null)
+            {
+                if (objectActive)
+                {
+                    if (inventory[index].grabType == ItemGrabType.Big)
+                    {
+                        //item.transform.parent = handPosArray[1];
+                        curHand = 1;
+                    }
+                    else
+                    {
+                        //item.transform.parent = handPosArray[0];
+                        curHand = 0;
+                    }
+                }
+                
                 inventory[index].gameObject.SetActive(objectActive);
+
+            }
         }
     }
 
@@ -134,4 +171,63 @@ public class PlayerInventory : PlayerBase
     {
         return inventory[value] == null == true;
     }
+
+    public Transform GetHand()
+    {
+        return handPosArray[curHand];
+    }
+
+    public ItemBase GetHeldItem()
+    {
+        handPosArray[curHand].GetChild(0).TryGetComponent(out ItemBase item);
+        return item;
+    }
+
+    public void GetItem(ItemBase item)
+    {
+        if (HasHoldItem())
+        {
+            return;
+        }
+
+        if (item.grabType == ItemGrabType.Big)
+        {
+            //item.transform.parent = handPosArray[1];
+            curHand = 1;
+        }
+        else
+        {
+            //item.transform.parent = handPosArray[0];
+            curHand = 0;
+        }
+        item.isGrab = true;
+        item.IsGrabbed = true;
+        item.GetComponent<Rigidbody>().useGravity = false;
+        item.GetComponent<Rigidbody>().isKinematic = true;
+        item.transform.localRotation = Quaternion.identity;
+        item.transform.localPosition = Vector3.zero;
+
+        player.GetComponent<PlayerInventory>().AddInventory(item);
+    }
+
+    public ItemBase DropItem()
+    {
+
+        //Transform dropItem = handPosArray[curHand].GetChild(0);
+        Transform dropItem = inventory[curInventory].transform;
+
+        //dropItem.parent = null;
+        dropItem.GetComponent<Rigidbody>().useGravity = true;
+        dropItem.GetComponent<Rigidbody>().isKinematic = false;
+        dropItem.TryGetComponent(out ItemBase item);
+        item.isGrab = false;
+        return item;
+    }
+
+    public bool HasHoldItem()
+    {
+        return inventory[curInventory] != null;
+        //return handPosArray[curHand].childCount > 0;
+    }
+
 }

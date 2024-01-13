@@ -116,6 +116,9 @@ MonoBehaviour:
   weight: 5
   itemType: 0
   grabType: 0
+  grabRotOffset: {x: 0, y: 45, z: 0}
+  grabPosOffset: {fileID: 5104173571016771885}
+  isGrab: 0
 --- !u!54 &5104173571016771886
 Rigidbody:
   m_ObjectHideFlags: 0

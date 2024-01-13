@@ -163,3 +163,6 @@ MonoBehaviour:
   weight: 10
   itemType: 1
   grabType: 0
+  grabRotOffset: {x: 0, y: 0, z: 0}
+  grabPosOffset: {fileID: 1937661659809149447}
+  isGrab: 0

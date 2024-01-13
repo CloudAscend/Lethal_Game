@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ItemPickUp : MonoBehaviour,IItemInteractable
 {
+    public void Init(object param = null)
+    {
+    }
+
     public void Interact(ItemBase item)
     {
         

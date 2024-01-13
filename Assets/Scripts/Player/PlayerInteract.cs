@@ -50,11 +50,11 @@ public class PlayerInteract : PlayerBase
     {
         detectedItem = itemDetection.DetectItem(detectDistance);
         sellArea = itemDetection.DetectSellArea(detectDistance);
-        if (detectedItem != null && !GameManager.instance.HasHoldItem() && !detectedItem.itemType.Equals(ItemType.Trap))
+        if (detectedItem != null && !PlayerInventory.Instance.HasHoldItem() && !detectedItem.itemType.Equals(ItemType.Trap))
         {
             UIManager.Instance.SetInteractText(true,"[ Pick Up ]");
         }
-        else if(sellArea != null && GameManager.instance.HasHoldItem())
+        else if(sellArea != null && PlayerInventory.Instance.HasHoldItem())
         {
             UIManager.Instance.SetInteractText(true, "[ Sell Item ]");
         }
@@ -84,7 +84,7 @@ public class PlayerInteract : PlayerBase
 
     private void InteractItem()
     {
-        var g = GameManager.instance;
+        var g = PlayerInventory.Instance;
         if(g.HasHoldItem() && itemDetection.CheckSellArea(detectDistance) && sellArea != null)
         {
             SellItem();
@@ -106,7 +106,7 @@ public class PlayerInteract : PlayerBase
 
     private void SellItem()
     {
-        Transform dropItem = GameManager.instance.DropItem();
+        Transform dropItem = PlayerInventory.Instance.DropItem().transform;
         detectedItem = null;
         dropItem.position = dropPos.position;
         dropItem.TryGetComponent(out ItemBase item);
@@ -126,14 +126,14 @@ public class PlayerInteract : PlayerBase
             return;
         }
         detectedItem.ScanUIOff();
-        GameManager.instance.GetItem(detectedItem);
+        PlayerInventory.Instance.GetItem(detectedItem);
     }
 
     private void Drop()
     {
-        if (GameManager.instance.HasHoldItem())
+        if (PlayerInventory.Instance.HasHoldItem())
         {
-            Transform dropItem = GameManager.instance.DropItem();
+            Transform dropItem = PlayerInventory.Instance.DropItem().transform;
             detectedItem = null;
             dropItem.position = dropPos.position;
             dropItem.TryGetComponent(out ItemBase item);
@@ -145,11 +145,11 @@ public class PlayerInteract : PlayerBase
 
     private void ThrowItem()
     {
-        if (GameManager.instance.HasHoldItem())
+        if (PlayerInventory.Instance.HasHoldItem())
         {
             if (!(playerMovement.stamina >= 0.5f)) return;
             playerMovement.SpendStamina(0.5f);
-            Transform dropItem = GameManager.instance.DropItem();
+            Transform dropItem = PlayerInventory.Instance.DropItem().transform;
             dropItem.position = dropPos.position;
             Rigidbody rigid;
             dropItem.TryGetComponent(out rigid);

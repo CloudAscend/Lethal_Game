@@ -26,7 +26,7 @@ public class ItemSpawnArea : MonoBehaviour
         pos = transform.position + pos;
         if(Physics.Raycast(new Vector3(pos.x,pos.y+detectFloorY,pos.z), Vector3.down, out hit, detectFloorY + 1,LayerMask.GetMask("Ground")))
         {
-            var spawnPos = hit.point + (Vector3.up * item.transform.localScale.y);
+            var spawnPos = hit.point + (Vector3.up * Mathf.Abs(item.transform.localScale.y));
             var spawnItem = Instantiate(item,spawnPos,item.transform.rotation);
             items.Add(spawnItem);
             return true;

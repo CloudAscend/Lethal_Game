@@ -9,8 +9,5 @@ public class TestItem : ItemBase
         base.Start();
     }
 
-    public override void Interact(IItemInteractable item)
-    {
-        base.Interact(item);
-    }
+   
 }

@@ -133,5 +133,8 @@ MonoBehaviour:
   weight: 15
   itemType: 0
   grabType: 1
+  grabRotOffset: {x: 0, y: 0, z: 0}
+  grabPosOffset: {fileID: 8951850754816091316}
+  isGrab: 0
   explosionPrefab: {fileID: 1000013462590818, guid: a756de3e816f86d4d81498362661e222,
     type: 3}

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
 
+#endif
 
 public struct ScanInfo
 {
@@ -41,6 +44,9 @@ public class ItemBase : MonoBehaviour
     public ItemType itemType = ItemType.Normal;
     public ItemGrabType grabType = ItemGrabType.Small;
 
+    public Vector3 grabRotOffset;
+    public Vector3 grabPosOffset;
+
     protected ScanUI ui;
 
     protected Renderer render;
@@ -50,6 +56,10 @@ public class ItemBase : MonoBehaviour
     protected bool isGrabbed = false;
     protected bool isThrew = false;
     protected bool isReadyToSell = false;
+
+    public Vector3 customRot = Vector3.zero;
+
+    public bool isGrab = false;
 
     protected IItemInteractable interactable;
 
@@ -118,33 +128,23 @@ public class ItemBase : MonoBehaviour
         //EventManager.Instance.AddListener(Event_Type.EntityScan, this);
     }
 
-
-
-    //public void OnNotify(Event_Type type, Component sender, object param = null)
-    //{
-    //    if(type == Event_Type.EntityScan)
-    //    {
-    //        Debug.Log("Scanned " + transform.name);
-    //        if(!param.Equals(null) && param.GetType().Equals(typeof(ScanInfo)))
-    //        {
-    //            ScanInfo scanInfo = (ScanInfo)param;
-    //            if(Vector3.Distance(scanInfo.playerPos,transform.position) < GameManager.ScanDistance)
-    //            {
-    //                ScanUI ui = UIManager.Instance.CreateScanUI(transform);
-    //                ui.Init(this);
-    //            }
-    //        }
-    //    }
-    //}
-
-    private void Update()
+    protected virtual void Update()
     {
         if (isGrabbed && IsOnGround())
         {
             isGrabbed = false;
             isThrew = false;
         }
-        
+        if(isGrab)
+        {
+            Transform hand = PlayerInventory.Instance.GetHand();
+            transform.position = grabPosOffset + hand.position;
+            Vector3 rot = GameManager.instance.cam.transform.eulerAngles;
+            
+            transform.localRotation = Quaternion.Euler(grabRotOffset + rot + customRot);
+            Debug.Log(transform.rotation.eulerAngles);
+        }
+        Interact();
     }
 
     protected void Init()
@@ -157,7 +157,7 @@ public class ItemBase : MonoBehaviour
 
     public bool CheckPickUpItem()
     {
-        Debug.Log(isGrabbed + " " + isReadyToSell + " " + IsOnGround());
+        //Debug.Log(isGrabbed + " " + isReadyToSell + " " + IsOnGround());
         if(isGrabbed) return false;
         //if(!IsOnGround()) return false;  
         if(IsReadyToSell) return false;
@@ -186,14 +186,32 @@ public class ItemBase : MonoBehaviour
         }
     }
 
-    public virtual void Interact(IItemInteractable interactable)
+    public virtual void SetInteract(IItemInteractable interactable, object param = null)
     {
         this.interactable = interactable;
+        interactable.Init(param);
+    }
+
+    protected virtual void Interact()
+    {
         if(interactable != null)
         {
             this.interactable.Interact(this);
         }
     }
-
-
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Color color = Color.green;
+       // var view = SceneView.currentDrawingSceneView;
+        Vector3 pos = transform.position + grabPosOffset;
+        //if (view != null)
+        //{
+            Gizmos.color = new Color(color.r, color.g, color.b, 0.3f);
+            Gizmos.DrawSphere(pos, 0.1f );
+            
+        //}
+       
+    }
+#endif
 }
